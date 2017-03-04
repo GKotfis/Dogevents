@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using WebApplication6.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication6.Controllers
+namespace Dogevents.Web.Controllers
 {
     /// <summary>
     /// A controller intercepts the incoming browser request and returns
@@ -20,16 +16,5 @@ namespace WebApplication6.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            // Creates a model and passes it on to the view.
-            Employee[] model =
-            {
-                new Employee { Name = "Alfred", Title = "Manager" },
-                new Employee { Name = "Sarah", Title = "Accountant" }
-            };
-
-            return View(model);
-        }
     }
 }
