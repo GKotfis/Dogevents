@@ -1,9 +1,10 @@
 ﻿using System.IO;
+using Dogevents.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace Dogevents.Web
 {
@@ -24,13 +25,12 @@ namespace Dogevents.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.AreaViewLocationFormats.Clear();
-                options.AreaViewLocationFormats.Add("/Categories/{2}/Views/{1}/{0}.cshtml");
-                options.AreaViewLocationFormats.Add("/Categories/{2}/Views/Shared/{0}.cshtml");
-                options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
-            });
+
+            //DI configuration
+            services.AddScoped<IEventsService, Core.Services.EventsService>();
+
+            services.AddSingleton(provider => new MongoClient("mongodb://localhost:27017"));
+            services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase("dogevents"));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

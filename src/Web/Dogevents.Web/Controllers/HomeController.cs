@@ -8,6 +8,5 @@ namespace Dogevents.Web.Controllers
         {
             return View();
         }
-
     }
 }

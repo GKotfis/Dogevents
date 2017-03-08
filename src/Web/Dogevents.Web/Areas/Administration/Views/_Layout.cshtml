@@ -8,28 +8,25 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-
     <div class="wrapper">
         <header role="banner">
             <nav class="container">
                 <ul>
                     <li><a asp-controller="Home" asp-action="Index">DogEvents</a></li>
+                    <li><a asp-controller="Home" asp-action="Events">Events</a></li>
                 </ul>
             </nav>
         </header>
-
         <main class="container">
             <h1>@ViewData["Title"]</h1>
             @RenderBody()
         </main>
     </div>
-
     <footer>
         <div class="container">
             <span>&copy; @DateTime.Now.Year - DogEvents</span>
         </div>
     </footer>
-
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("scripts", required: false)
 </body>
