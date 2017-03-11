@@ -1,0 +1,15 @@
+﻿@model Dogevents.Core.Domain.Event
+
+<form>
+    <input name="eventId" type="text" required class="form-control" />
+    <button type="submit" class="btn btn-default">get from facebook</button>
+</form>
+
+@if (Model != null)
+{
+    <ul>
+        <li>@Model.Id</li>
+        <li>@Model.Title</li>
+        <li>@Model.Description</li>
+    </ul>
+}
