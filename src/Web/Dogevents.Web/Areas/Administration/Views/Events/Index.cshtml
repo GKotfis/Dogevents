@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Dogevents.Core.Domain.Event>
+@section Scripts {
+    @*Insert any script tags for this page here*@
+}
+
+<form asp-action="Add">
+    <label for="eventUrl">Event Id:</label>
+    <input name="eventUrl" type="text" required class="form-control" />
+    <button type="submit" class="btn btn-default">Add event</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Cover</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><a target="_blank" href="@item.Url">@item.Id</a></td>
+                <td>@item.Name</td>
+                <td>@item.Description.Substring(0, Math.Min(@item.Description.Length, 100)) ... </td>
+                <td>@item.StartTime.ToLocalTime() - @item.EndTime.ToLocalTime()</td>
+                <td><img src="@item.CoverUrl" width="100" height="100" /></td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = @item.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
