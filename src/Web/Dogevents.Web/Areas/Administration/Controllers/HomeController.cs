@@ -21,17 +21,5 @@ namespace Dogevents.Web.Categories.Administration.Controllers
         {
             return View();
         }
-
-        public IActionResult Events()
-        {
-            var dogevents = _eventsService.GetAll();
-            return View(dogevents);
-        }
-
-        public async Task<IActionResult> GetEvent(string eventId)
-        {
-            var @event = await _facebookService.GetEventAsync(eventId);
-            return View(@event);
-        }
     }
 }

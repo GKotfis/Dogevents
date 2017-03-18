@@ -20,7 +20,7 @@ namespace Dogevents.Core.Services
             if (string.IsNullOrWhiteSpace(eventId))
                 return null;
 
-            var result = await _facebookClient.GetAsync<Event>(eventId);
+            var result = await _facebookClient.GetAsync<Event>(eventId, "fields=id,name,description,is_canceled,cover,start_time,end_time,place");
 
             return result;
         }

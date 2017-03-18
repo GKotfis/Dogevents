@@ -34,7 +34,10 @@ namespace Dogevents.Core.Services
 
             var result = await response.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<T>(result);
+            return JsonConvert.DeserializeObject<T>(result, new JsonSerializerSettings
+            {
+                DateFormatHandling = DateFormatHandling.IsoDateFormat
+            });
         }
     }
 }

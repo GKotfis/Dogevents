@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Dogevents.Core.Domain;
 using Dogevents.Core.Mongo.Queries;
 using MongoDB.Driver;
@@ -15,9 +16,22 @@ namespace Dogevents.Core.Services
             _database = database;
         }
 
-        public IEnumerable<Event> GetAll()
+        public Task<List<Event>> GetAll()
         {
-            return _database.Events().Find(_ => true).ToList();
+            return _database.Events().Find(_ => true).ToListAsync();
+        }
+
+        public async Task Add(Event @event)
+        {
+            if (@event == null)
+                return;
+
+            await _database.Events().InsertOneAsync(@event);
+        }
+
+        public async Task Delete(long eventId)
+        {
+            await _database.Events().DeleteOneAsync(x => x.Id == eventId);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Dogevents.Web
 
             //DI configuration
             services.AddScoped<IEventsService, EventsService>();
-            services.AddScoped<IFacebookClient, FacebookClient>(provider => new FacebookClient("EAACEdEose0cBAD9ZAsmFCuowYsv0HoZB07oMkMVPtLwLVlpdBMnzRkNSv7CHB6S06j4s0VRgaJNHyZAf0HF2V90JROZAnyqUW1Jc8WxaHzURcNWtDgWdAQQU3RCatKnQAa9zQIZBTh45kaCwPzoA7ZAhJRlpohE0sgHjWcotlaVMdOMDZArZCY20a0QgocjVegsZD"));
+            services.AddScoped<IFacebookClient, FacebookClient>(provider => new FacebookClient("429398007407936|eZyoBi3ESSBJ8Vz3uJZPVcGBJ6A"));
             services.AddScoped<IFacebookService, FacebookService>();
 
             services.AddSingleton(provider => new MongoClient("mongodb://localhost:27017"));
