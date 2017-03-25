@@ -26,6 +26,11 @@ namespace Dogevents.Core.Services
             if (@event == null)
                 return;
 
+            bool eventExist = await _database.Events().Find(x => x.Id == @event.Id).AnyAsync();
+
+            if (eventExist)
+                return;
+
             await _database.Events().InsertOneAsync(@event);
         }
 

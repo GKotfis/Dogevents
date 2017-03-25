@@ -3,34 +3,42 @@
     @*Insert any script tags for this page here*@
 }
 
-<form asp-action="Add">
-    <label for="eventUrl">Event Id:</label>
-    <input name="eventUrl" type="text" required class="form-control" />
-    <button type="submit" class="btn btn-default">Add event</button>
-</form>
+<section class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+        <form asp-action="Add">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label for="eventUrl" class="mdl-textfield__label">Event Id:</label>
+                <input name="eventUrl" type="text" required class="mdl-textfield__input" />
+            </div>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add event</button>
+        </form>
+    </div>
+</section>
 
-<table>
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Cover</th>
-            <th>Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td><a target="_blank" href="@item.Url">@item.Id</a></td>
-                <td>@item.Name</td>
-                <td>@item.Description.Substring(0, Math.Min(@item.Description.Length, 100)) ... </td>
-                <td>@item.StartTime.ToLocalTime() - @item.EndTime.ToLocalTime()</td>
-                <td><img src="@item.CoverUrl" width="100" height="100" /></td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = @item.Id })</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<section class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+            <thead>
+                <tr>
+                    <th class="mdl-data-table__cell--non-numeric">Id</th>
+                    <th class="mdl-data-table__cell--non-numeric">Name</th>
+                    <th class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone mdl-cell--hide-tablet">Description</th>
+                    <th class="mdl-data-table__cell--non-numeric">Date</th>
+                    <th class="mdl-data-table__cell--non-numeric">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric"><a target="_blank" href="@item.Url">@item.Id</a></td>
+                        <td class="mdl-data-table__cell--non-numeric">@item.Name</td>
+                        <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone mdl-cell--hide-tablet"  style="white-space: normal; word-wrap: break-word">@item.Description.Substring(0, Math.Min(@item.Description.Length, 100)) ... </td>
+                        <td class="mdl-data-table__cell--non-numeric">@item.StartTime.ToLocalTime() - @item.EndTime.ToLocalTime()</td>
+                        <td class="mdl-data-table__cell--non-numeric">@Html.ActionLink("Delete", "Delete", new { id = @item.Id })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

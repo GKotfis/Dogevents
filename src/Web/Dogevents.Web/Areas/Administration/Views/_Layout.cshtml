@@ -3,31 +3,52 @@
 <head>
     <meta charset="utf-8" />
     <title>DogEvents Administration</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="@ViewData["Description"]" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/material.min.css">
+        <script src="~/css/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-light_blue.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </environment>
 </head>
-<body>
-    <div class="wrapper">
-        <header role="banner">
-            <nav class="container">
-                <ul>
-                    <li><a asp-controller="Home" asp-action="Index">DogEvents</a></li>
-                    <li><a asp-controller="Events" asp-action="Index">Events</a></li>
-                    <li><a asp-controller="Home" asp-action="GetEvent">Get Event</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main class="container">
-            <h1>@ViewData["Title"]</h1>
-            @RenderBody()
-        </main>
-    </div>
-    <footer>
-        <div class="container">
-            <span>&copy; @DateTime.Now.Year - DogEvents</span>
+<body class="">
+    <div class="mdl-layout__container">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header has-drawer is-upgraded">
+            <header class="mdl-layout__header is-casting-shadow">
+                <div class="mdl-layout__drawer-button"><i class="material-icons">menu</i></div>
+                <div class="mdl-layout__header-row">
+                    <h5>@ViewData["Title"]</h5>
+                </div>
+                <div class="mdl-layout__header-row hide-for-print mdl-layout--large-screen-only">
+                    <nav class="mdl-navigation">
+                        <a asp-controller="Home" asp-action="Index" class="mdl-layout__tab is-active">Home</a>
+                        <a asp-controller="Events" asp-action="Index" class="mdl-layout__tab">Events</a>
+                        <a asp-controller="Fetching" asp-action="Index" class="mdl-layout__tab">Feeds</a>
+                    </nav>
+                </div>
+            </header>
+            <div class="mdl-layout__drawer">
+                <nav role="navigation" class="mdl-navigation">
+                    <a asp-controller="Home" asp-action="Index" class="mdl-navigation__link">Home</a>
+                    <a asp-controller="Events" asp-action="Index" class="mdl-navigation__link">Events</a>
+                    <a asp-controller="Fetching" asp-action="Index" class="mdl-navigation__link">Feeds</a>
+                </nav>
+            </div>
+            <main class="mdl-layout__content">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+        <footer>
+            <div class="container">
+                <span>&copy; @DateTime.Now.Year - DogEvents</span>
+            </div>
+        </footer>
+    </div>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("scripts", required: false)
 </body>

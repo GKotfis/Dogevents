@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Dogevents.Core.Domain.Feed>
+@section Scripts {
+    <script>
+        var table = document.querySelector('table');
+        var headerCheckbox = table.querySelector('thead .mdl-data-table__select input');
+        var boxes = table.querySelectorAll('tbody .mdl-data-table__select');
+        var headerCheckHandler = function (event) {
+            if (event.target.checked) {
+                for (var i = 0, length = boxes.length; i < length; i++) {
+                    boxes[i].MaterialCheckbox.check();
+                }
+            } else {
+                for (var i = 0, length = boxes.length; i < length; i++) {
+                    boxes[i].MaterialCheckbox.uncheck();
+                }
+            }
+        };
+        headerCheckbox.addEventListener('change', headerCheckHandler);
+    </script>
+}
+
+<section class="mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+        <form asp-action="Fetch">
+            <div class="mdl-textfield mdl-js-textfield">
+                <label for="since" class="mdl-textfield__label">Since</label>
+                <input name="since" class="mdl-textfield__input" placeholder="Since date" type="date" required />
+            </div>
+            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Get feeds</button>
+        </form>
+    </div>
+</section>
+
+@if (!Model.Any())
+{
+    <p class="mdl-layout-title mdl-typography--title-color-contrast">Sorry.. no feeds to show</p>
+}
+else
+{
+    <section class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+            <h3>Total: @Model.Count()</h3>
+            <form asp-action="AddFeeds">
+                <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Add select events</button>
+                <table class="mdl-data-table mdl-shadow--2dp">
+                    <thead>
+                        <tr>
+                            <th class="mdl-data-table__cell--non-numeric">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="table-header">
+                                    <input type="checkbox" id="table-header" class="mdl-checkbox__input" />
+                                </label>
+                            </th>
+                            <th class="mdl-data-table__cell--non-numeric">Name</th>
+                            <th class="mdl-data-table__cell--non-numeric">Created date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-data-table__select" for="row[@item.id]">
+                                        <input type="checkbox" id="row[@item.id]" name="feedLinks" value="@item.link" class="mdl-checkbox__input" />
+                                    </label>
+                                </td>
+                                <td class="mdl-data-table__cell--non-numeric"><a target="_blank" href="@item.link">@item.name</a></td>
+                                <td class="mdl-data-table__cell--non-numeric">@item.created_time.ToLocalTime()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </section>
+}

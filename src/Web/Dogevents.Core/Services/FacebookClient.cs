@@ -27,7 +27,8 @@ namespace Dogevents.Core.Services
 
         public async Task<T> GetAsync<T>(string endpoint, string args = null)
         {
-            var response = await _httpClient.GetAsync($"{endpoint}?access_token={_accessToken}&{args}");
+            var graphUrl = $"{endpoint}?access_token={_accessToken}&{args}";
+            var response = await _httpClient.GetAsync(graphUrl);
 
             if (!response.IsSuccessStatusCode)
                 return default(T);
@@ -39,5 +40,21 @@ namespace Dogevents.Core.Services
                 DateFormatHandling = DateFormatHandling.IsoDateFormat
             });
         }
+
+        public async Task<T> GetAsync<T>(string url)
+        {
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+                return default(T);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<T>(result, new JsonSerializerSettings
+            {
+                DateFormatHandling = DateFormatHandling.IsoDateFormat
+            });
+        }
+
     }
 }
