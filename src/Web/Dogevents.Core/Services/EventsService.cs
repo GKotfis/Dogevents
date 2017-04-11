@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dogevents.Core.Domain;
+using Dogevents.Core.Helpers;
 using Dogevents.Core.Mongo.Queries;
 using MongoDB.Driver;
 
@@ -25,6 +26,10 @@ namespace Dogevents.Core.Services
         {
             if (@event == null)
                 return;
+
+            if (@event.Description.IsEmpty())
+                @event.Description = string.Empty;
+
 
             bool eventExist = await _database.Events().Find(x => x.Id == @event.Id).AnyAsync();
 

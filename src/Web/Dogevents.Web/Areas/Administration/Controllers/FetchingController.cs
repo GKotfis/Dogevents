@@ -49,8 +49,16 @@ namespace Dogevents.Web.Areas.Administration.Controllers
                     continue;
                 }
 
-                var @event = await _facebookService.GetEventAsync(eventId);
-                await _eventsService.Add(@event);
+                try
+                {
+                    var @event = await _facebookService.GetEventAsync(eventId);
+                    await _eventsService.Add(@event);
+
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
 
             return RedirectToAction("Index", "Events");

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Dogevents.Core.Domain.Event>
+﻿@using Dogevents.Core.Helpers
+@model IEnumerable<Dogevents.Core.Domain.Event>
 @section Scripts {
     @*Insert any script tags for this page here*@
 }
@@ -30,10 +31,12 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+                    var descriptionText = @item.Description.IsEmpty() ? string.Empty : @item.Description.Substring(0, Math.Min(@item.Description.Length, 100));
+
                     <tr>
                         <td class="mdl-data-table__cell--non-numeric"><a target="_blank" href="@item.Url">@item.Id</a></td>
                         <td class="mdl-data-table__cell--non-numeric">@item.Name</td>
-                        <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone mdl-cell--hide-tablet"  style="white-space: normal; word-wrap: break-word">@item.Description.Substring(0, Math.Min(@item.Description.Length, 100)) ... </td>
+                        <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone mdl-cell--hide-tablet" style="white-space: normal; word-wrap: break-word">@descriptionText ... </td>
                         <td class="mdl-data-table__cell--non-numeric">@item.StartTime.ToLocalTime() - @item.EndTime.ToLocalTime()</td>
                         <td class="mdl-data-table__cell--non-numeric">@Html.ActionLink("Delete", "Delete", new { id = @item.Id })</td>
                     </tr>

@@ -18,17 +18,17 @@ namespace Dogevents.Core.Services
 
         public Task<List<Event>> GetIncoming()
         {
-            return _database.Events().Find(_ => true).Skip(10).Limit(5).ToListAsync();
+            return _database.Events().Find(_ => true).Skip(10).Limit(6).ToListAsync();
         }
 
         public Task<List<Event>> GetJustAdded()
         {
-            return _database.Events().Find(_ => true).Skip(15).Limit(5).ToListAsync();
+            return _database.Events().Find(_ => true).Skip(15).Limit(6).ToListAsync();
         }
 
         public Task<List<Event>> GetPopular()
         {
-            return _database.Events().Find(_ => true).Limit(5).ToListAsync();
+            return _database.Events().Find(_ => true).Limit(6).ToListAsync();
         }
     }
 }

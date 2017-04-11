@@ -1,9 +1,10 @@
 <template>
     <div id="popular" class="popular-layout__container">
         <div class="popular-layout__content">
-            <div class="popular-layout-title"><span class="popular-layout-title__text">Na topie</span></div>
-            <div class="popular-layout-events__content">
-                <eventview v-for="event in events" :event="event"></eventview>
+            <div class="popular-layout-title"><h4 class="popular-layout-title__text">Na topie</h4></div>
+            <hr />
+            <div class="mdl-grid popular-layout-events__content">
+                <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
             </div>
         </div>
     </div>
@@ -19,7 +20,7 @@
             events: []
         }),
         mounted() {
-            axios.get('http://localhost:5000/api/viewevents/getpopular')
+            axios.get('http://192.168.1.108:5000/api/viewevents/getpopular')
                 .then(response => this.events = response.data);
         },
         components: {
@@ -29,18 +30,14 @@
 
 </script>
 <style>
-    .popular-layout__container {}
-    
-    .popular-layout__content {
-        margin: 10px 20px;
-    }
-    
+
     .popular-layout-title__text {
-        font-size: 1.5em;
-        font-weight: bold;
+        text-align: center;
     }
-    
+
     .popular-layout-events__content {
-      
+      max-width: 100%;
+      display: flex;
+      align-items: center;
     }
 </style>
