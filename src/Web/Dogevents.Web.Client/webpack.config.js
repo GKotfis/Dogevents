@@ -75,10 +75,6 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new Dotenv({
-      path: './.my.env', // if not simply .env 
-      safe: true // lets load the .env.example file as well 
     })
   ])
 }
