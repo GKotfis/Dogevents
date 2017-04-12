@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/main.js',
@@ -49,13 +50,21 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
+module.exports.plugins = (module.exports.plugins || []).concat([
+  new webpack.DefinePlugin({
+    'process.env': {
+      DogeventsApiUrl: '"http://192.168.1.108:5000/api"'
+    }
+  })])
+
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"'
+        NODE_ENV: '"production"',
+        DogeventsApiUrl: '"http://dogeventsapi.azurewebsites.net/"'
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
@@ -66,6 +75,10 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new Dotenv({
+      path: './.my.env', // if not simply .env 
+      safe: true // lets load the .env.example file as well 
     })
   ])
 }

@@ -13,14 +13,14 @@
 <script>
     import axios from 'axios'
     import eventview from './EventCard.vue'
-
+ 
     export default {
         name: 'popular',
         data: () => ({
             events: []
         }),
         mounted() {
-            axios.get('http://192.168.1.108:5000/api/viewevents/getpopular')
+            axios.get(process.env.DogeventsApiUrl + '/viewevents/getpopular')
                 .then(response => this.events = response.data);
         },
         components: {
