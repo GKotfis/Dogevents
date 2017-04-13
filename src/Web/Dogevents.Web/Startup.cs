@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Security.Authentication;
 using Dogevents.Core.Services;
 using Dogevents.Core.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -64,9 +65,11 @@ namespace Dogevents.Web
             services.AddScoped<IFacebookService, FacebookService>();
 
             var dbSettings = GetConfigurationValue<DatabaseSettings>("db");
-            var mongoUrl = new MongoUrl(dbSettings.ConnectionString);
-            services.AddSingleton(provider => new MongoClient(mongoUrl));
-            services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase(mongoUrl.DatabaseName));
+            MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(dbSettings.ConnectionString));
+            settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+
+            services.AddSingleton(provider => new MongoClient(settings));
+            services.AddScoped(provider => provider.GetService<MongoClient>().GetDatabase("dogeventsdb"));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
