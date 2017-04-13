@@ -20,7 +20,7 @@
             events: []
         }),
         mounted() {
-            axios.get(process.env.DogeventsApiUrl + '/viewevents/getpopular')
+            axios.get(process.env.API_URL + '/viewevents/getpopular')
                 .then(response => this.events = response.data);
         },
         components: {

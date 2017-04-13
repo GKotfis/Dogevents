@@ -53,7 +53,7 @@ module.exports = {
 module.exports.plugins = (module.exports.plugins || []).concat([
   new webpack.DefinePlugin({
     'process.env': {
-      DogeventsApiUrl: '"http://192.168.1.108:5000/api"'
+      API_URL: JSON.stringify(process.env.API_URL)
     }
   })])
 
@@ -64,7 +64,7 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
-        DogeventsApiUrl: '"http://dogeventsapi.azurewebsites.net/"'
+        API_URL: JSON.stringify(process.env.API_URL)
       }
     }),
     new webpack.optimize.UglifyJsPlugin({
