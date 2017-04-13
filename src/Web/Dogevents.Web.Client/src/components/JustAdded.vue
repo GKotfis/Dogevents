@@ -20,7 +20,7 @@
             events: []
         }),
         mounted() {
-            axios.get('http://192.168.1.108:5000/api/viewevents/GetJustAdded')
+            axios.get(process.env.API_URL + '/viewevents/GetJustAdded')
                 .then(response => this.events = response.data);
         },
         components: {
