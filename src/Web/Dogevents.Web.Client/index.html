@@ -1,52 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Dogevents.pl</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="description" content="Wydarzenia, zawody i seminaria dla psa i jego właściciela" />
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-light_blue.min.css" />
-    <environment names="Development">
-        <link rel="stylesheet" href="./css/material.css">
-        <script src="./css/material.js"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-light_blue.min.css" />
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    </environment>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <!--<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.yellow-light_blue.min.css" />-->
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'>
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
 </head>
-<body class="mdl-color--grey-100">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header has-drawer is-upgraded">
-        <header class="mdl-layout__header is-casting-shadow">
-            <div class="mdl-layout__drawer-button"><i class="material-icons">menu</i></div>
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">
-                    <img src="src/assets/1490500928_calendar-day-month-date-event-january-new_year-3.svg" />
-                    Dogevents
-                </span>
-                <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" href="#">Idea</a>
-                    <a class="mdl-navigation__link" href="#">Kontakt</a>
-                    <button title="Dodaj wydarzenie" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                        <i class="material-icons">add</i>
-                    </button>
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <nav role="navigation" class="mdl-navigation">
-                <a href="/" class="mdl-navigation__link">Home</a>
-            </nav>
-        </div>
-        <main>
-            <div id="popular"></div>
-            <div id="justadded"></div>            
-        </main>
-    </div>
-    
+
+<body>
+    <div id="app"></div>
     <script src="/dist/build.js"></script>
 </body>
+
 </html>

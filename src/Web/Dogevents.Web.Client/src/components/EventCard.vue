@@ -1,13 +1,26 @@
 ﻿<template>
-    <div class="event-card mdl-card mdl-card--border mdl-shadow--2dp mdl-cell mdl-cell--12-col-phone mdl-cell--6-col-tablet mdl-cell--4-col-desktop"
-        v-bind:style="{ background: 'url(' + event.coverUrl + ')' }">
-        <div class="mdl-card__title mdl-card--expand">
-            <span><a v-bind:href="event.url" target="_blank">{{event.name}}</a></span>
-        </div>
-        <div class="mdl-card__actions mdl-card--border">
-            <span>{{eventDate}}</span>
-        </div>
-    </div>
+    <md-layout class="event-card" md-flex="40" md-flex-offset="5">
+        <md-card>
+            <md-card-area>
+                <md-card-media>
+                    <img :src="event.coverUrl">
+                </md-card-media>
+                <md-card-header>
+                    <h4 class="">{{event.name}}</h4>
+                    <div class="md-subhead">
+                        <a :href="getLocationLink()">
+                            <md-icon>location_on</md-icon>
+                            <span>{{event.place.name}}</span>
+                        </a>
+                        <div class="md-subhead">
+                            <md-icon>schedule</md-icon>
+                            <span>{{eventDate}}</span>
+                        </div>
+                    </div>
+                </md-card-header>
+            </md-card-area>
+        </md-card>
+    </md-layout>
 </template>
 <script>
     export default {
@@ -40,36 +53,28 @@
                     })
 
                 return startTime.toLocaleDateString(locale, dateFormatOptions) + ' - ' + endTime.toLocaleDateString(locale, dateFormatOptions)
+            },
+            getLocationLink() {
+                let baseUrl = "http://maps.google.com/maps?z=12&t=m"
+                if (this.event.place.location) {
+                    return baseUrl + '&q=loc:' + this.event.place.location.latitude + '+' + this.event.place.location.longitude
+                }
+                else {
+                    return baseUrl + '&q=' + this.event.place.name
+                }
             }
         }
     }
 
 </script>
 <style>
-    .event-card.mdl-card {
-        /*background-size: 100%!important;*/
-        background-repeat: no-repeat;
-        max-width: 40%;
-        border-color: rgba(255, 255, 255, 1);
-        border-style: solid;
-        border-width: 0.5px;
-        border-radius: 5px;
+    .event-card {
+        margin-bottom: 10px;
     }
     
-    .event-card>.mdl-card__title {
-        background: rgba(0, 0, 0, 0.2)!important;
+    .md-card-header {
+        padding-top: 0px!important;
+        padding-bottom: 0px!important;
     }
-    
-    .event-card>.mdl-card__title a {
-        color: white;
-        font-size: 1em;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    
-    .event-card>.mdl-card__actions {
-        background: rgba(0, 0, 0, 0.5);
-        color: #fff;
-        font-size: 0.9em;
-    }
+   
 </style>
