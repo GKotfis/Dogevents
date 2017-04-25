@@ -108,7 +108,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 :: 4. Run Webpack
 IF EXIST "%DEPLOYMENT_TARGET%\webpack.config.js" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! run build
+  call :ExecuteCmd !NPM_CMD! run production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
