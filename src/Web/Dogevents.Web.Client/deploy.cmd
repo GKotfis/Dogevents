@@ -89,8 +89,8 @@ goto :EOF
 echo Handling node.js deployment.
 
 echo Installing node moduls dev/prod
-call :ExecuteCmd !NPM_CMD! install --no-progress --only=prod
-call :ExecuteCmd !NPM_CMD! install --no-progress --only=dev
+call npm install --only=prod
+call npm install --only=dev
 IF !ERRORLEVEL! NEQ 0 goto error
 echo Finished Installing node modules
 
