@@ -100,15 +100,16 @@ call :SelectNodeVersion
 :: 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! install
+  call :ExecuteCmd !NPM_CMD! install --no-progress --only=prod
+  call :ExecuteCmd !NPM_CMD! install --no-progress --only=dev
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
 
-:: 4. Run Webpack
+:: 4. Run build
 IF EXIST "%DEPLOYMENT_TARGET%\webpack.config.js" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! run production
+  call :ExecuteCmd !NPM_CMD! run build
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
