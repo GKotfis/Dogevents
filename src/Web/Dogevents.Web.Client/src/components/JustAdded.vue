@@ -12,7 +12,7 @@
     import eventview from './EventCard.vue'
 
     export default {
-        name: 'popular',
+        name: 'justadded',
         data: () => ({
             events: []
         }),

@@ -14,7 +14,7 @@
                         </a>
                         <div class="md-subhead">
                             <md-icon>schedule</md-icon>
-                            <span>{{eventDate}}</span>
+                            <span>{{eventDate | toEventDate}}</span>
                         </div>
                     </div>
                 </md-card-header>
@@ -26,34 +26,9 @@
     export default {
         props: ['event'],
         computed: {
-            eventDate: function () {
-                return this.getEventTime();
-            }
+            eventDate: function() { return {'start_time': this.event.start_time, 'end_time': this.event.end_time} }
         },
         methods: {
-            getEventTime: function () {
-                let startTime = new Date(this.event.start_time);
-                let endTime = new Date(this.event.end_time);
-                let locale = 'en-EN';
-                let dateFormatOptions = {
-                    day: 'numeric',
-                    month: 'long'
-                };
-                let timeFormatOptions = {
-                    hour: 'numeric',
-                    minute: 'numeric'
-                };
-
-                if (startTime.toLocaleDateString() === endTime.toLocaleDateString())
-                    return startTime.toLocaleDateString(locale, dateFormatOptions) + ' ' + startTime.toLocaleTimeString(locale, timeFormatOptions) + ' - ' + endTime.toLocaleTimeString(locale, timeFormatOptions);
-
-                if (this.event.start_time.substring(0, 7) == this.event.end_time.substring(0, 7))
-                    return startTime.getDate() + ' - ' + endTime.getDate() + ' ' + startTime.toLocaleDateString(locale, {
-                        month: 'long'
-                    })
-
-                return startTime.toLocaleDateString(locale, dateFormatOptions) + ' - ' + endTime.toLocaleDateString(locale, dateFormatOptions)
-            },
             getLocationLink() {
                 let baseUrl = "http://maps.google.com/maps?z=12&t=m"
                 if (this.event.place.location) {
