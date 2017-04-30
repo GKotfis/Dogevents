@@ -1,5 +1,5 @@
 ﻿<template>
-    <md-layout class="event-card" md-flex="40" md-flex-offset="5">
+    <md-layout class="event-card" md-flex-xsmall="40" md-flex-small="50"  md-flex-medium="30">
         <md-card>
             <md-card-area>
                 <md-card-media>
@@ -70,6 +70,7 @@
 <style>
     .event-card {
         margin-bottom: 10px;
+        margin-right: 10px;
     }
     
     .md-card-header {

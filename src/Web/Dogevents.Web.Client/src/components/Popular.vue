@@ -1,12 +1,10 @@
 <template>
-    <mdl-layout>
-        <mdl-layout md-flex="100" md-flex-offset="5">
-            <span class="md-body-2">Popularne</span>
-            <md-layout>
-                <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
-            </md-layout>
-        </mdl-layout>
-    </mdl-layout>
+    <div>
+        <span class="md-subheading"><i class="material-icons">grade</i>Popularne</span>
+        <md-layout md-flex="100" md-align="center">
+            <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
+        </md-layout>
+    </div>
 </template>
 
 <script>
@@ -30,5 +28,8 @@
 
 </script>
 <style>
-
+    .md-subheading>i {
+        vertical-align: middle !important;
+        padding: 10px 5px;
+    }
 </style>

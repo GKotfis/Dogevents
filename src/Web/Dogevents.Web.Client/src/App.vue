@@ -1,15 +1,16 @@
 <template>
     <div class="app-viewport">
-        <md-toolbar>
-            <h2 class="md-title" style="flex: 1">Dogevents</h2>
+        <md-toolbar class="top-fixed md-dense">
+            <i class="material-icons">event</i>
+            <h2 class="md-title" style="flex: 1" md-hide-xsmall>Dogevents</h2>
             <md-button class="md-icon-button">
                 <md-icon>search</md-icon>
             </md-button>
         </md-toolbar>
-        <md-layout>
+        <main>
             <popular />
-            <!--<justadded />-->
-        </md-layout>
+            <justadded />
+        </main>
     </div>
 </template>
 
@@ -28,9 +29,20 @@
 
 </script>
 
-<style>
+<style scoped>
     .app-viewport {
         display: flex;
         flex-flow: column;
+    }
+    
+    .top-fixed {
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+    }
+    
+    main {
+        margin-top: 60px;
     }
 </style>
