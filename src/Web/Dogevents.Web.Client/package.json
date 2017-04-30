@@ -5,8 +5,8 @@
   "author": "Grzegorz Kotfis <gkotfis@outlook.com>",
   "private": true,
   "engines": {
-    "node": "6.10.2",
-    "npm": "3.10.10"
+    "node": ">=6.10.2",
+    "npm": ">=3.10.10"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
