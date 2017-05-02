@@ -93,8 +93,8 @@ pushd "%DEPLOYMENT_SOURCE%"
 echo %cd%
 call npm install --only=prod
 call npm install --only=dev
-call npm install webpack -g
-echo Running webpack
+REM call npm install webpack -g
+echo Running webpack build
 call npm run build
 popd
 IF !ERRORLEVEL! NEQ 0 goto error
