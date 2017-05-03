@@ -88,30 +88,30 @@ goto :EOF
 :Deployment
 echo Handling node.js deployment.
 
-echo Installing node moduls dev/prod
-pushd "%DEPLOYMENT_SOURCE%"
-echo %cd%
-call npm install --only=prod
-call npm install --only=dev
-REM call npm install webpack -g
-echo Running webpack build
-call npm run build
-popd
-IF !ERRORLEVEL! NEQ 0 goto error
-echo Finished Installing node modules
+:: 1. Webpack Build
+IF EXIST "%DEPLOYMENT_SOURCE%\webpack.config.js" (
+  echo Installing node modules dev/prod
+  pushd "%DEPLOYMENT_SOURCE%"
+  call :ExecuteCmd !NPM_CMD! install --only=prod
+  call :ExecuteCmd !NPM_CMD! install --only=dev
+  REM call npm install webpack -g
+  echo Running webpack build
+  call :ExecuteCmd !NPM_CMD! run build
+  popd
+  IF !ERRORLEVEL! NEQ 0 goto error
+  echo Finished webpack build
+)
 
-
-
-:: 1. KuduSync
+:: 2. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd;node_modules"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
-:: 2. Select node version
+:: 3. Select node version
 call :SelectNodeVersion
 
-:: 3. Install npm packages
+:: 4. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
   call :ExecuteCmd !NPM_CMD! install --production
