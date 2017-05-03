@@ -92,11 +92,11 @@ echo Handling node.js deployment.
 IF EXIST "%DEPLOYMENT_SOURCE%\webpack.config.js" (
   echo Installing node modules dev/prod
   pushd "%DEPLOYMENT_SOURCE%"
-  call :ExecuteCmd !NPM_CMD! install --only=prod
-  call :ExecuteCmd !NPM_CMD! install --only=dev
+  call npm install --only=prod
+  call npm install --only=dev
   REM call npm install webpack -g
   echo Running webpack build
-  call :ExecuteCmd !NPM_CMD! run build
+  call npm run build
   popd
   IF !ERRORLEVEL! NEQ 0 goto error
   echo Finished webpack build
