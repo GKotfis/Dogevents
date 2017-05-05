@@ -7,13 +7,13 @@
             </md-layout>
             <md-input-container style="flex: 1">
                 <label>Szukaj w okolicy</label>
-                <md-input v-model="initialValue"></md-input>
+                <md-input></md-input>
             </md-input-container>
             <md-button class="md-icon-button md-accent" @click.native="toggleSearchMenu">
                 <md-icon>search</md-icon>
             </md-button>
         </md-toolbar>
-        <md-sidenav class="md-right" ref="searchSideNav">
+        <md-sidenav class="md-left" ref="searchSideNav">
             <md-toolbar>
                 <div class="md-toolbar-container">
                     <h3 class="md-title">Szukaj wydarzeń</h3>
@@ -28,12 +28,15 @@
             <popular />
             <justadded />
         </main>
-        <md-bottom-bar md-hide-large>
-            <md-bottom-bar-item md-icon="history">Recents</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="favorite" md-active>Favorites</md-bottom-bar-item>
-            <md-bottom-bar-item md-icon="near_me">Nearby</md-bottom-bar-item>
-        </md-bottom-bar>
-    </div>
+
+        <md-layout md-hide-medium-and-up md-align="center">
+            <md-bottom-bar class="bottom-fixed">
+                <md-bottom-bar-item md-icon="event">Kalendarz</md-bottom-bar-item>
+                <md-bottom-bar-item md-icon="near_me">W okolicy</md-bottom-bar-item>
+                <md-bottom-bar-item md-icon="share" md-active>Podaj dalej</md-bottom-bar-item>
+            </md-bottom-bar>
+        </md-layout>
+    </div> 
 </template>
 
 <script>
@@ -66,5 +69,10 @@
     .app-viewport {
         display: flex;
         flex-flow: column;
+    }
+
+    .bottom-fixed {
+        position: fixed;
+        bottom: 0;
     }
 </style>

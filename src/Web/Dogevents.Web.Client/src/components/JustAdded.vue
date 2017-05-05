@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="md-subheading"><i class="material-icons">fiber_new</i>Ostatnio dodane</span>
+        <md-subheader class="md-accent">Ostatnio dodane</md-subheader>
         <md-layout md-flex="100">
             <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
         </md-layout>

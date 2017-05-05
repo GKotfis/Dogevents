@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span class="md-subheading"><i class="material-icons">grade</i>Popularne</span>
+        <md-subheader class="md-accent">Popularne</md-subheader>
         <md-layout md-flex="100" md-align="center">
             <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
         </md-layout>
