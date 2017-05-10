@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dogevents.Core.Domain;
 using Dogevents.Core.Mongo.Queries;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Dogevents.Core.Services
 {
@@ -18,17 +19,29 @@ namespace Dogevents.Core.Services
 
         public Task<List<Event>> GetIncoming()
         {
-            return _database.Events().Find(_ => true).Skip(10).Limit(6).ToListAsync();
+            var minDate = DateTime.Now.AddDays(-14).Date;
+
+            return _database.Events()
+                        .AsQueryable()
+                        .Where(_ => _.StartTime <= minDate)
+                        .Take(6)
+                        .ToListAsync();
         }
 
         public Task<List<Event>> GetJustAdded()
         {
-            return _database.Events().Find(_ => true).Skip(15).Limit(6).ToListAsync();
+            return _database.Events()
+                                .AsQueryable()
+                                .Take(6)
+                                .ToListAsync();
         }
 
         public Task<List<Event>> GetPopular()
         {
-            return _database.Events().Find(_ => true).Limit(6).ToListAsync();
+            return _database.Events()
+                                .AsQueryable()
+                                .Sample(6)
+                                .ToListAsync();
         }
     }
 }

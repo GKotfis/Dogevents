@@ -11,10 +11,12 @@ namespace Dogevents.Core.Services
     public class EventsService : IEventsService
     {
         private readonly IMongoDatabase _database;
+        private readonly IEventValidator _eventValidator;
 
-        public EventsService(IMongoDatabase database)
+        public EventsService(IMongoDatabase database, IEventValidator eventValidator)
         {
             _database = database;
+            _eventValidator = eventValidator;
         }
 
         public Task<List<Event>> GetAll()
@@ -24,17 +26,11 @@ namespace Dogevents.Core.Services
 
         public async Task Add(Event @event)
         {
-            if (@event == null)
+            if (@event == null || !_eventValidator.IsValid(@event))
                 return;
 
             if (@event.Description.IsEmpty())
                 @event.Description = string.Empty;
-
-
-            bool eventExist = await _database.Events().Find(x => x.Id == @event.Id).AnyAsync();
-
-            if (eventExist)
-                return;
 
             await _database.Events().InsertOneAsync(@event);
         }

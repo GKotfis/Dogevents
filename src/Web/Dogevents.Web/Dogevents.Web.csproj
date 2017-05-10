@@ -11,7 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="config.production.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="config.production.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +45,15 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="config.development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

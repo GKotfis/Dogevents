@@ -58,7 +58,8 @@ if (process.env.NODE_ENV === 'development') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        API_URL: '"http://192.168.1.108:5000/api"'
+        // API_URL: '"http://192.168.1.108:5000/api"'
+        API_URL: '"http://localhost:52297/api"'
       }
     })])
 }

@@ -5,10 +5,13 @@
                 <i class="material-icons">event</i>
                 <h2 class="md-title" style="flex: 1" md-hide-xsmall>Dogevents</h2>
             </md-layout>
+
             <md-input-container style="flex: 1">
-                <label>Szukaj w okolicy</label>
-                <md-input></md-input>
+                <md-icon >clear</md-icon>
+                <vue-google-autocomplete id="map" classname="location md-input md-theme-default" placeholder="" v-on:placechanged="getAddressData"
+                    types="geocode" country="pl" v-on:enter="" />
             </md-input-container>
+
             <md-button class="md-icon-button md-accent" @click.native="toggleSearchMenu">
                 <md-icon>search</md-icon>
             </md-button>
@@ -36,7 +39,7 @@
                 <md-bottom-bar-item md-icon="share" md-active>Podaj dalej</md-bottom-bar-item>
             </md-bottom-bar>
         </md-layout>
-    </div> 
+    </div>
 </template>
 
 <script>
@@ -45,12 +48,19 @@
     import popular from './components/Popular.vue'
     import justadded from './components/JustAdded.vue'
     import searchNav from './components/SearchNav.vue'
+    import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
     export default {
+        data: function () {
+            return {
+                address: ''
+            }
+        },
         components: {
             popular,
             justadded,
-            searchNav
+            searchNav,
+            VueGoogleAutocomplete
         },
         methods: {
             toggleSearchMenu() {
@@ -59,6 +69,9 @@
             closeSearchSideNav() {
                 this.$refs.searchSideNav.close();
             },
+            getAddressData: function (addressData, placeResultData) {
+                this.address = addressData;
+            }
 
         }
     }
@@ -72,7 +85,12 @@
     }
 
     .bottom-fixed {
-        position: fixed;
-        bottom: 0;
+        position: relative;
+        /*bottom: 0;*/
+        z-index: 1000;
+    }
+
+    .location {
+        font-size: small;
     }
 </style>

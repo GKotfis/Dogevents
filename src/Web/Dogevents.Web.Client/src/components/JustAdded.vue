@@ -1,7 +1,7 @@
 <template>
     <div>
         <md-subheader class="md-accent">Ostatnio dodane</md-subheader>
-        <md-layout md-flex="100">
+        <md-layout md-flex="100" md-align="center">
             <eventview v-for="event in events" :event="event" :key="event.Id"></eventview>
         </md-layout>
     </div>

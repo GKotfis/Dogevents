@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Security.Authentication;
+using Dogevents.Core.Domain;
 using Dogevents.Core.Services;
 using Dogevents.Core.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,7 @@ namespace Dogevents.Web
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://dogevents.pl"));
+                    builder => builder.WithOrigins("http://dogevents.pl", "http://localhost:8080"));
             });
 
             services.AddMvc();
@@ -58,13 +59,14 @@ namespace Dogevents.Web
             });
 
             //DI configuration
-            services.AddSingleton(provider => GetConfigurationValue<DatabaseSettings>("db"));
+            services.AddSingleton(provider => Configuration.GetConfigurationValue<DatabaseSettings>("db"));
             services.AddScoped<IEventsService, EventsService>();
             services.AddScoped<IViewEventsService, ViewEventsService>();
             services.AddScoped<IFacebookClient, FacebookClient>(provider => new FacebookClient("429398007407936|eZyoBi3ESSBJ8Vz3uJZPVcGBJ6A"));
             services.AddScoped<IFacebookService, FacebookService>();
+            services.AddScoped<IEventValidator, EventValidator>();
 
-            var dbSettings = GetConfigurationValue<DatabaseSettings>("db");
+            var dbSettings = Configuration.GetConfigurationValue<DatabaseSettings>("db"); 
             MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(dbSettings.ConnectionString));
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
 
@@ -91,13 +93,6 @@ namespace Dogevents.Web
                 routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-
-        private T GetConfigurationValue<T>(string section) where T : new()
-        {
-            T val = new T();
-            Configuration.GetSection(section).Bind(val);
-            return val;
         }
     }
 }
