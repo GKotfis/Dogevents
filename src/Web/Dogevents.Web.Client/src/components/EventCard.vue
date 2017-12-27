@@ -8,7 +8,7 @@
                 <md-card-header>
                     <h4 class="">{{event.name}}</h4>
                     <div class="md-subhead">
-                        <a :href="getLocationLink()">
+                        <a :href="getLocationLink()" v-if="getLocationLink() !== null">
                             <md-icon>location_on</md-icon>
                             <span>{{event.place.name}}</span>
                         </a>
@@ -31,12 +31,17 @@
         methods: {
             getLocationLink() {
                 let baseUrl = "http://maps.google.com/maps?z=12&t=m"
-                if (this.event.place.location) {
+                if (this.event.place && this.event.place.location) {
                     return baseUrl + '&q=loc:' + this.event.place.location.latitude + '+' + this.event.place.location.longitude
                 }
-                else {
+                else if (this.event.place && this.event.place.name) {
                     return baseUrl + '&q=' + this.event.place.name
                 }
+                else {
+                    return null
+                }
+
+
             }
         }
     }
