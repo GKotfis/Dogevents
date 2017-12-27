@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Dogevents.Core.Helpers;
 using Dogevents.Core.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,13 @@ namespace Dogevents.Web.Areas.Administration.Controllers
         {
             await _eventsService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Search(bool withoutCategory)
+        {
+            var dogevents = _eventsService.GetAll().Result.Where(x => !x.Categories.IsAny());
+
+            return View("Index", dogevents);
         }
     }
 }

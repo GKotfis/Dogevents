@@ -37,7 +37,7 @@ namespace Dogevents.Core.Services
 
             return JsonConvert.DeserializeObject<T>(result, new JsonSerializerSettings
             {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
             });
         }
 

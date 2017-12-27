@@ -6,10 +6,10 @@ namespace Dogevents.Core.Services
 {
     public interface IViewEventsService
     {
-        Task<List<Event>> GetPopular();
-        Task<List<Event>> GetIncoming();
-        Task<List<Event>> GetJustAdded();
+        Task<List<T>> GetPopular<T>() where T : IViewEventModel;
 
+        Task<List<T>> GetIncoming<T>() where T : IViewEventModel;
 
+        Task<List<T>> GetJustAdded<T>() where T : IViewEventModel;
     }
 }

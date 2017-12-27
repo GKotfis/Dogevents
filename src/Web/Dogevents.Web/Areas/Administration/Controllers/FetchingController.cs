@@ -55,7 +55,7 @@ namespace Dogevents.Web.Areas.Administration.Controllers
                     await _eventsService.Add(@event);
 
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }

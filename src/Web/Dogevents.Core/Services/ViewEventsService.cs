@@ -17,28 +17,29 @@ namespace Dogevents.Core.Services
             _database = database;
         }
 
-        public Task<List<Event>> GetIncoming()
+        public Task<List<T>> GetIncoming<T>() where T : IViewEventModel
         {
-            var minDate = DateTime.Now.AddDays(-14).Date;
+            var minDate = DateTime.Now.AddDays(14).Date;
 
-            return _database.Events()
+            return _database.Events<T>()
                         .AsQueryable()
-                        .Where(_ => _.StartTime <= minDate)
+                        .Where(_ => _.StartTime >= minDate)
+                        .OrderBy(_ => _.StartTime)
                         .Take(6)
                         .ToListAsync();
         }
 
-        public Task<List<Event>> GetJustAdded()
+        public Task<List<T>> GetJustAdded<T>() where T : IViewEventModel
         {
-            return _database.Events()
+            return _database.Events<T>()
                                 .AsQueryable()
                                 .Take(6)
                                 .ToListAsync();
         }
 
-        public Task<List<Event>> GetPopular()
+        public Task<List<T>> GetPopular<T>() where T : IViewEventModel
         {
-            return _database.Events()
+            return _database.Events<T>()
                                 .AsQueryable()
                                 .Sample(6)
                                 .ToListAsync();
