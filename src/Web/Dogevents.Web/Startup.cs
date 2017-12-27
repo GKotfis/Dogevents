@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Security.Authentication;
 using Dogevents.Core.Domain;
+using Dogevents.Core.Mongo;
 using Dogevents.Core.Services;
 using Dogevents.Core.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -93,6 +94,8 @@ namespace Dogevents.Web
                 routes.MapRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+
+            MongoConfigurator.Initialize();
         }
     }
 }
