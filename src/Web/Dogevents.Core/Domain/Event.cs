@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
@@ -30,6 +31,26 @@ namespace Dogevents.Core.Domain
         public Owner Owner { get; set; }
         public Place Place { get; set; }
         public IEnumerable<string> Categories { get; set; }
+
+        [OnSerializing]
+        public void OnSerializing(StreamingContext context)
+        {
+            if (this.Place?.Location != null)
+            {
+                this.Place.Location.Coordinates.lat = this.Place.Location.Latitude;
+                this.Place.Location.Coordinates.lng = this.Place.Location.Longitude;
+            }
+        }
+
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context)
+        {
+            if (this.Place?.Location != null)
+            {
+                this.Place.Location.Coordinates.lat = this.Place.Location.Latitude;
+                this.Place.Location.Coordinates.lng = this.Place.Location.Longitude;
+            }
+        }
     }
 
     public class Cover
@@ -56,9 +77,24 @@ namespace Dogevents.Core.Domain
     {
         public string City { get; set; }
         public string Country { get; set; }
+
+        //For MongoDB geospatial search
+        public Coordinates Coordinates { get; set; }
+
         public float Latitude { get; set; }
         public float Longitude { get; set; }
         public string Street { get; set; }
         public string Zip { get; set; }
+
+        public Location()
+        {
+            this.Coordinates = new Coordinates();
+        }
+    }
+
+    public class Coordinates
+    {
+        public double lng { get; set; }
+        public double lat { get; set; }
     }
 }
