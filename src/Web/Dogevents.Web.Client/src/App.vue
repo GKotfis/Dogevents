@@ -5,13 +5,14 @@
                 <i class="material-icons">event</i>
                 <h2 class="md-title" style="flex: 1" md-hide-xsmall>Dogevents</h2>
             </md-layout>
-
+    
             <md-input-container style="flex: 1">
-                <md-icon >clear</md-icon>
-                <vue-google-autocomplete id="map" classname="location md-input md-theme-default" placeholder="" v-on:placechanged="getAddressData"
-                    types="geocode" country="pl" v-on:enter="" />
+                <md-icon>clear</md-icon>
+                <!--<md-input @focus="selectText" />
+                <input @focus="selectText" />-->
+                <vue-google-autocomplete id="map" classname="location md-input md-theme-default" placeholder="dowolna lokalizacja" @placechanged="getAddressData" types="geocode" country="pl" @click.native="selectText"/>
             </md-input-container>
-
+    
             <md-button class="md-icon-button md-accent" @click.native="toggleSearchMenu">
                 <md-icon>search</md-icon>
             </md-button>
@@ -29,9 +30,10 @@
         </md-sidenav>
         <main>
             <popular />
+            <incoming />
             <justadded />
         </main>
-
+    
         <md-layout md-hide-medium-and-up md-align="center">
             <md-bottom-bar class="bottom-fixed">
                 <md-bottom-bar-item md-icon="event">Kalendarz</md-bottom-bar-item>
@@ -43,54 +45,60 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-    import VueMaterial from 'vue-material'
-    import popular from './components/Popular.vue'
-    import justadded from './components/JustAdded.vue'
-    import searchNav from './components/SearchNav.vue'
-    import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import Vue from 'vue'
+import VueMaterial from 'vue-material'
+import popular from './components/Popular.vue'
+import incoming from './components/Incoming.vue'
+import justadded from './components/JustAdded.vue'
+import searchNav from './components/SearchNav.vue'
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
-    export default {
-        data: function () {
-            return {
-                address: ''
-            }
-        },
-        components: {
-            popular,
-            justadded,
-            searchNav,
-            VueGoogleAutocomplete
-        },
-        methods: {
-            toggleSearchMenu() {
-                this.$refs.searchSideNav.toggle();
-            },
-            closeSearchSideNav() {
-                this.$refs.searchSideNav.close();
-            },
-            getAddressData: function (addressData, placeResultData) {
-                this.address = addressData;
-            }
-
+export default {
+    data: function () {
+        return {
+            address: ''
         }
+    },
+    components: {
+        popular,
+        incoming,
+        justadded,
+        searchNav,
+        VueGoogleAutocomplete
+    },
+    methods: {
+        toggleSearchMenu() {
+            this.$refs.searchSideNav.toggle();
+        },
+        closeSearchSideNav() {
+            this.$refs.searchSideNav.close();
+        },
+        getAddressData: function (addressData, placeResultData) {
+            this.address = addressData;
+            this.$store.dispatch('CHANGE_LOCATION', { location: addressData });
+        },
+        selectText: function () {
+            console.log(this.$target)
+        }
+
     }
+}
 
 </script>
 
 <style scoped>
-    .app-viewport {
-        display: flex;
-        flex-flow: column;
-    }
+.app-viewport {
+    display: flex;
+    flex-flow: column;
+}
 
-    .bottom-fixed {
-        position: relative;
-        /*bottom: 0;*/
-        z-index: 1000;
-    }
+.bottom-fixed {
+    position: relative;
+    /*bottom: 0;*/
+    z-index: 1000;
+}
 
-    .location {
-        font-size: small;
-    }
+.location {
+    font-size: small;
+}
 </style>
