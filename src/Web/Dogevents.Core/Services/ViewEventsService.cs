@@ -33,6 +33,7 @@ namespace Dogevents.Core.Services
         {
             return _database.Events<T>()
                                 .AsQueryable()
+                                .OrderByDescending(_ => _.Id)
                                 .Take(6)
                                 .ToListAsync();
         }
