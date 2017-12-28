@@ -3,10 +3,10 @@
         <md-card>
             <md-card-area>
                 <md-card-media>
-                    <img :src="event.coverUrl">
+                    <img :src="event.coverUrl" @error="event.coverUrl='src/assets/'+getDefaultImageName()">
                 </md-card-media>
                 <md-card-header>
-                    <h4 class="">{{event.name}}</h4>
+                    <h4 class=""><a v-bind:href="event.url" target="_blank">{{event.name}}</a></h4>
                     <div class="md-subhead">
                         <a :href="getLocationLink()" v-if="getLocationLink() !== null">
                             <md-icon>location_on</md-icon>
@@ -40,8 +40,9 @@
                 else {
                     return null
                 }
-
-
+            },
+            getDefaultImageName() {
+                return 'default_' + Math.floor(Math.random() * 3) + '.png'
             }
         }
     }
