@@ -30,8 +30,7 @@ namespace Dogevents.Core.Services
 
         public async Task<IEnumerable<Feed>> GetFeeds(DateTime since)
         {
-            var dateFormat = "yyyy-MM-dd";
-            var sinceFormat = since != null ? since.ToString(dateFormat) : DateTime.Now.ToString(dateFormat);
+            var sinceFormat = since != null ? since.ToUnixTime() : DateTime.Now.ToUnixTime();
             var endpoint = $"{groupId}/feed";
 
             var feeds = await _facebookClient.GetAsync<Feeds>(endpoint, $"fields=link,name,created_time,updated_time&since={sinceFormat}");

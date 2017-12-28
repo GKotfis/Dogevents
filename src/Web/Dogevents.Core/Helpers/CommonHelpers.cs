@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Dogevents.Core.Helpers
@@ -18,6 +19,11 @@ namespace Dogevents.Core.Helpers
         public static bool IsAny<T>(this IEnumerable<T> source)
         {
             return source != null && source.Any();
+        }
+
+        public static int ToUnixTime(this DateTime value)
+        {
+            return (int)value.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
         }
     }
 }
