@@ -53,7 +53,7 @@
                         <td class="mdl-data-table__cell--non-numeric"><a target="_blank" href="@item.Url">@item.Id</a></td>
                         <td class="mdl-data-table__cell--non-numeric">@item.Name</td>
                         <td class="mdl-data-table__cell--non-numeric mdl-cell--hide-phone mdl-cell--hide-tablet" style="white-space: normal; word-wrap: break-word">@descriptionText ... </td>
-                        <td class="mdl-data-table__cell--non-numeric">@item.StartTime.ToLocalTime() - @item.EndTime.ToLocalTime()</td>
+                        <td class="mdl-data-table__cell--non-numeric">@item.StartTime.ToLocalTime() <br /> @item.EndTime.ToLocalTime()</td>
                         <td class="mdl-data-table__cell--non-numeric">
                             @Html.ActionLink("Delete", "Delete", new { id = @item.Id })
                             @Html.DropDownList("Categories", new List<SelectListItem>() { new SelectListItem() {Text = "Sport", Value="S" } })
