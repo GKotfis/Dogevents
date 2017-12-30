@@ -29,9 +29,16 @@
             </md-button>
         </md-sidenav>
         <main>
+            <md-theme class="complete-example">
+            <md-button class="md-fab">
+                <md-icon v-if="!done">pets</md-icon>
+            </md-button>
+            <md-spinner :md-size="74" :md-stroke="2.2" :md-progress="progress" v-if="transition && progress < 115"></md-spinner>
+            </md-theme>
             <popular />
             <incoming />
             <justadded />
+            <eventDetails />
         </main>
     
         <md-layout md-hide-medium-and-up md-align="center">
@@ -41,6 +48,7 @@
                 <md-bottom-bar-item md-icon="share" md-active>Podaj dalej</md-bottom-bar-item>
             </md-bottom-bar>
         </md-layout>
+        
     </div>
 </template>
 
@@ -52,19 +60,29 @@ import incoming from './components/Incoming.vue'
 import justadded from './components/JustAdded.vue'
 import searchNav from './components/SearchNav.vue'
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import eventDetails from './components/EventDetails.vue'
+import EventBus from './main'
 
 export default {
     data: function () {
         return {
-            address: ''
+            address: '',
+            progress: 0,
+            progressInterval: null,
+            done: false,
+            transition: true
         }
     },
     components: {
         popular,
         incoming,
         justadded,
+        eventDetails,
         searchNav,
         VueGoogleAutocomplete
+    },
+    created() {
+
     },
     methods: {
         toggleSearchMenu() {
@@ -75,12 +93,35 @@ export default {
         },
         getAddressData: function (addressData, placeResultData) {
             this.address = addressData;
-            this.$store.dispatch('CHANGE_LOCATION', { location: addressData });
+            EventBus.$emit('CHANGE_LOCATION', { location: addressData });
         },
         selectText: function () {
             console.log(this.$target)
-        }
+        },
+         startProgress() {
+      this.progressInterval = window.setInterval(() => {
+        this.progress += 3;
 
+        if (this.progress > 115) {
+          this.done = true;
+          window.clearInterval(this.progressInterval);
+          window.setTimeout(() => {
+            this.done = false;
+          }, 3000);
+        }
+      }, 100);
+    },
+    restartProgress() {
+      this.progress = 0;
+      this.transition = false;
+      this.done = false;
+
+      window.clearInterval(this.progressInterval);
+      window.setTimeout(() => {
+        this.transition = true;
+        this.startProgress();
+      }, 600);
+    }
     }
 }
 

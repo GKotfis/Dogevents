@@ -9,7 +9,7 @@
 
 <script>
     import axios from 'axios'
-    import eventview from './EventCard.vue'
+    import eventview from './EventSimple.vue'
 
     export default {
         name: 'justadded',

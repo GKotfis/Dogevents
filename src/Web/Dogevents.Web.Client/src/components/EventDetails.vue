@@ -1,6 +1,9 @@
-﻿<template>
-    <md-layout class="event-card" md-flex-xsmall="40" md-flex-small="50"  md-flex-medium="30">
-        <md-card>
+<template>
+  <div>
+       <md-dialog ref="EventDetailsDialog">
+           <md-dialog-title>{{event.name}}</md-dialog-title>
+            <md-dialog-content>
+                <md-card>
             <md-card-area>
                 <md-card-media>
                     <img 
@@ -23,16 +26,41 @@
                 </md-card-header>
             </md-card-area>
         </md-card>
-    </md-layout>
+            </md-dialog-content>
+       </md-dialog>
+  </div>
 </template>
 <script>
     import EventBus from '../main'
     export default {
-        props: ['event'],
+        name: 'EventDetails',
+        data: () => ({
+            showDialog: false,
+            event: {
+                    'name': '',
+                }
+        }),
+        mounted() {
+            EventBus.$on('SHOW_DETAILS', payLoad => {
+                this.event = payLoad;
+                this.openDialog('EventDetailsDialog');
+            })
+        },
         computed: {
             eventDate: function() { return {'start_time': this.event.start_time, 'end_time': this.event.end_time} }
         },
         methods: {
+            openDialog(ref) {
+                this.$refs[ref].open();
+            },
+            closeDialog(ref) {
+                this.$refs[ref].close();
+            },
+            getDefaultImageName() {
+                return (
+                    "/src/assets/dogevents_" + (Math.floor(Math.random() * 4) + 1) + ".png"
+                );
+            },
             getLocationLink() {
                 let baseUrl = "http://maps.google.com/maps?z=12&t=m"
                 if (this.event.place && this.event.place.location) {
@@ -45,25 +73,6 @@
                     return null
                 }
             },
-            getDefaultImageName() {
-                return '/src/assets/dogevents_' + (Math.floor(Math.random() * 4) + 1) + '.png'
-            },
-            showDetails(eventId) {
-                EventBus.$emit('SHOW_DETAILS', this.event);
-            }
         }
     }
-
 </script>
-<style>
-    .event-card {
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-
-    .md-card-header {
-        padding-top: 0px!important;
-        padding-bottom: 0px!important;
-    }
-   
-</style>

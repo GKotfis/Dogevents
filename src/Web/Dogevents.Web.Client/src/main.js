@@ -20,7 +20,12 @@ Vue.filter("toEventDate", function(eventDate){
   return getEventTime(eventDate);
 })
 
+const EventBus = new Vue();
+export default EventBus;
+
 var app = new Vue({
   el: '#app',
   render: h => h(App)
 })
+
+

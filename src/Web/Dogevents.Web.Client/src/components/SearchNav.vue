@@ -2,7 +2,7 @@
     <div>
         <md-button-toggle md-single>
             <md-layout>
-                <md-button >Seminaria</md-button>
+                <md-button>Seminaria</md-button>
                 <md-button>Sport</md-button>
                 <md-button>Warsztaty</md-button>
                 <md-button>Tropy</md-button>

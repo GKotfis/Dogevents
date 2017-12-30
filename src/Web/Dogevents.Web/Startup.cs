@@ -50,7 +50,7 @@ namespace Dogevents.Web
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://dogevents.pl", "http://localhost:8080"));
+                    builder => builder.WithOrigins("http://dogevents.pl", "http://localhost:8081"));
             });
 
             services.AddMvc();
