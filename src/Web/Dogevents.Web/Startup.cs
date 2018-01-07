@@ -46,6 +46,7 @@ namespace Dogevents.Web
             services.AddOptions();
 
             services.Configure<DatabaseSettings>(Configuration.GetSection("db"));
+            services.Configure<FacebookSettings>(Configuration.GetSection("fb"));
 
             services.AddCors(options =>
             {
@@ -61,13 +62,18 @@ namespace Dogevents.Web
 
             //DI configuration
             services.AddSingleton(provider => Configuration.GetConfigurationValue<DatabaseSettings>("db"));
+            services.AddSingleton(provider => Configuration.GetConfigurationValue<FacebookSettings>("fb"));
+
             services.AddScoped<IEventsService, EventsService>();
             services.AddScoped<IViewEventsService, ViewEventsService>();
-            services.AddScoped<IFacebookClient, FacebookClient>(provider => new FacebookClient("429398007407936|eZyoBi3ESSBJ8Vz3uJZPVcGBJ6A"));
+
+            var fbSettings = Configuration.GetConfigurationValue<FacebookSettings>("fb");
+            services.AddScoped<IFacebookClient, FacebookClient>(provider => new FacebookClient(fbSettings.AccessToken));
+
             services.AddScoped<IFacebookService, FacebookService>();
             services.AddScoped<IEventValidator, EventValidator>();
 
-            var dbSettings = Configuration.GetConfigurationValue<DatabaseSettings>("db"); 
+            var dbSettings = Configuration.GetConfigurationValue<DatabaseSettings>("db");
             MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(dbSettings.ConnectionString));
             settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
 

@@ -1,5 +1,0 @@
-﻿{
-  "db": {
-    "connectionstring": "mongodb://localhost:27017"
-  }
-}

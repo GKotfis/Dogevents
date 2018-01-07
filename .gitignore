@@ -252,3 +252,4 @@ paket-files/
 *.sln.iml
 /src/Web/Dogevents.Web/ScaffoldingReadMe.txt
 /src/Web/Dogevents.Web/config.production.json
+/src/Web/Dogevents.Web/config.development.json

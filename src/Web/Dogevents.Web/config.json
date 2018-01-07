@@ -1,5 +1,8 @@
 ﻿{
   "db": {
     "connectionstring": "mongodb://localhost:27017"
+  },
+  "fb": {
+    "accesstoken":  "your_token_here"
   }
 }
